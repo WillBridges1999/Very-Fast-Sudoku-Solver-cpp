@@ -18,6 +18,13 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="SudokuPuzzle.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SudokuPuzzle.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{C6FBF6C7-F518-4C56-B0CF-E8FEE5FC8971}</ProjectGuid>
@@ -122,13 +129,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\ACW_Sudoku - Template\SudokuPuzzle.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\ACW_Sudoku - Template\Main.cpp" />
-    <ClCompile Include="..\..\..\ACW_Sudoku - Template\SudokuPuzzle.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
