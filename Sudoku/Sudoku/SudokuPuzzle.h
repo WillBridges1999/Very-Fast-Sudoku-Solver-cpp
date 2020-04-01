@@ -2,7 +2,6 @@
 #include "CellGroup.h"
 #include <vector>
 #include <algorithm>
-#include <iostream>
 #include <iomanip>
 // Add your code here
 
