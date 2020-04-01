@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -41,7 +42,7 @@ public:
 	}
 
 	// Methods to alter the candidate list.
-	//void removeCandidateValue(const int value);
+	void removeCandidateValue(const int value);
 
 
 private:
