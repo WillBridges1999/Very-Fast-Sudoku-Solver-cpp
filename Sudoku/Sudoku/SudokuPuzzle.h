@@ -3,6 +3,7 @@
 #include <vector>
 #include <algorithm>
 #include <iomanip>
+#include <fstream>
 // Add your code here
 
 class SudokuPuzzle {
@@ -20,7 +21,7 @@ private:
 
 	void output() const; // Output Grid.
 
-	void readPuzzle(const char filenameIn[]) const; // Initialise Grid.
+	void readPuzzle(const char filenameIn[]); // Initialise Grid.
 
 	// Code to intialise the structure 2 pointer CellGroups.
 	CellGroup m_gridRows[9];

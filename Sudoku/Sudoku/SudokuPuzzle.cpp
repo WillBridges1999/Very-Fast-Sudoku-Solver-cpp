@@ -34,10 +34,27 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 }
 
 
-void SudokuPuzzle::readPuzzle(const char filenameIn[]) const {
-	// Add code to read in a puzzle from the text file and store within the SudokuPuzzle object
+void SudokuPuzzle::readPuzzle(const char filenameIn[]) 
+{
+	ifstream fin(filenameIn);
+	// First part of algorithm needs to input all the file values into the CellGroup for gridRows[9], as specified in ACW.
 
-	// Also, need to assign all these file values into the m_gridRows[9] CellGroup...
+	int inputValue; // Declare these ONCE in the entire class, if it's re-used in future code (performance increase).
+	bool givenFlag;
+	for (int row = 0; row < m_puzzleSize; row++) // Leaving as post++, as doesn't affect performance with ints.
+	{
+		for (int column = 0; column < m_puzzleSize; column++)
+		{
+			fin >> inputValue;
+
+			if (inputValue == 0)
+			{
+				givenFlag = false;
+			}
+
+			m_gridRows[row].setCell(column, new Cell(inputValue, givenFlag));
+		}
+	}
 }
 
 
