@@ -7,12 +7,18 @@
 
 class SudokuPuzzle {
 public:
-	SudokuPuzzle();
+	// Intialisation list to set puzzleSize and blockSize.
+	SudokuPuzzle() : m_puzzleSize(9), m_blockSize(3) 
+	{ }
 	
 	void solve(const char filenameIn[]);
 
 
 private:
+	// SudokuPuzzle members to save the puzzle size and block size.
+	int m_puzzleSize;
+	int m_blockSize;
+
 	void output() const; // Output Grid.
 
 	void readPuzzle(const char filenameIn[]) const; // Initialise Grid.

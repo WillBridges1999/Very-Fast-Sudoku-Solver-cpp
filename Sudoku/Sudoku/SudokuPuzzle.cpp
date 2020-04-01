@@ -3,9 +3,9 @@
 #include <chrono>
 
 
-SudokuPuzzle::SudokuPuzzle() {
+/*SudokuPuzzle::SudokuPuzzle() {
 	// Add code to initialise the SudokuPuzzle object
-}
+}*/
 
 
 void SudokuPuzzle::solve(const char filenameIn[]) {
@@ -31,6 +31,8 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 
 void SudokuPuzzle::readPuzzle(const char filenameIn[]) const {
 	// Add code to read in a puzzle from the text file and store within the SudokuPuzzle object
+
+	// Also, need to assign all these file values into the m_gridRows[9] CellGroup...
 }
 
 
