@@ -1,21 +1,26 @@
 #pragma once
-
+#include "CellGroup.h"
+#include <vector>
+#include <algorithm>
+#include <iostream>
+#include <iomanip>
 // Add your code here
 
 class SudokuPuzzle {
 public:
 	SudokuPuzzle();
-
+	
 	void solve(const char filenameIn[]);
 
-	// Add your code here
 
 private:
-	void output() const;
+	void output() const; // Output Grid.
 
-	void readPuzzle(const char filenameIn[]) const;
+	void readPuzzle(const char filenameIn[]) const; // Initialise Grid.
 
-	// Add your code here
-
+	// Code to intialise the structure 2 pointer CellGroups.
+	CellGroup m_gridRows[9];
+	CellGroup m_gridColumns[9];
+	CellGroup m_gridBlocks[9];
 };
 
