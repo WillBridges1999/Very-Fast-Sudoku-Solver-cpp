@@ -3,9 +3,14 @@
 #include <chrono>
 
 
-/*SudokuPuzzle::SudokuPuzzle() {
-	// Add code to initialise the SudokuPuzzle object
-}*/
+SudokuPuzzle::SudokuPuzzle() 
+{
+	// Setting these because only solving 3 by 3 sudoku puzzles.
+	m_puzzleSize = 9; 
+	m_blockSize = 3;
+}
+
+SudokuPuzzle::~SudokuPuzzle() { }
 
 
 void SudokuPuzzle::solve(const char filenameIn[]) {

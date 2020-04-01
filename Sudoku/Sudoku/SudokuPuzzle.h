@@ -7,9 +7,8 @@
 
 class SudokuPuzzle {
 public:
-	// Intialisation list to set puzzleSize and blockSize.
-	SudokuPuzzle() : m_puzzleSize(9), m_blockSize(3) 
-	{ }
+	SudokuPuzzle();
+	~SudokuPuzzle();
 	
 	void solve(const char filenameIn[]);
 
