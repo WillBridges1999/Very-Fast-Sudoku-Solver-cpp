@@ -17,13 +17,31 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 	// Get start time
 	const auto startTime = std::chrono::high_resolution_clock::now();
 
-	// Add code to solve the puzzle
+	// Adding code to solve the puzzle
 	bool solved = false;
-
-	/*while (solved == false)
+	while (solved == false)
 	{
+		// Visiting each individual cell.
+		for (int row = 0; row < 9; row++)
+		{
+			for (int column = 0; column < 9; column++)
+			{
+				// As not to visit given values already.
+				bool wasValueGiven = m_gridRows[row].getCell(column)->getGivenFlag();
 
-	}*/
+				if (wasValueGiven == false)
+				{
+					// To check if we haven't already solved this position/ cell.
+					int currentValue = m_gridRows[row].getCell(column)->getValue();
+
+					if (currentValue == 0)
+					{
+						// Carry on here. Need to solve via candidate list, triple context etc...
+					}
+				}
+			}
+		}
+	}
 
 
 	// Get end time
@@ -70,7 +88,7 @@ void SudokuPuzzle::readPuzzle(const char filenameIn[])
 			m_gridBlocks[blockNumber].setCell(cellIndexInBlock, m_gridRows[row].getCell(column)); // Should be working now.
 
 
-			// Getting the block number for the next iteration.
+			// Gets the specific block number for the next iteration.
 			blockNumber = getBlockNumber(row, column, blockNumber);
 
 			// Getting the cellIndexInBlock number for the next iteration.
