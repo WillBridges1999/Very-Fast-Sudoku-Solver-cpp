@@ -59,7 +59,7 @@ void SudokuPuzzle::readPuzzle(const char filenameIn[])
 			m_gridColumns[column].setCell(row, m_gridRows[row].getCell(column));
 
 			// Using the Rows CellGroup to populate the Block CellGroup.
-			m_gridBlocks[blockNumber].setCell(cellIndexInBlock, m_gridRows[row].getCell(column)); // NOT WORKING. Gonna be complicated...
+			m_gridBlocks[blockNumber].setCell(cellIndexInBlock, m_gridRows[row].getCell(column)); // Should be working now.
 
 			// Setting the block number.
 			if (column == 2 || column == 5)
@@ -72,11 +72,11 @@ void SudokuPuzzle::readPuzzle(const char filenameIn[])
 				{
 					blockNumber = 0;
 				}
-				else if (row > 2 && row < 5)
+				else if (row < 5)
 				{
 					blockNumber = 3;
 				}
-				else if (row > 5)
+				else if (row >= 5)
 				{
 					blockNumber = 6;
 				}
@@ -110,6 +110,10 @@ void SudokuPuzzle::readPuzzle(const char filenameIn[])
 				if (column == 2 || column == 5)
 				{
 					cellIndexInBlock = 6;
+				}
+				else if (column == 8)
+				{
+					cellIndexInBlock = 0;
 				}
 				else
 				{
