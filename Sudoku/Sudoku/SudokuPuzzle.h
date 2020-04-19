@@ -15,10 +15,7 @@ public:
 
 
 private:
-	// SudokuPuzzle members to save the puzzle size and block size.
-	int m_puzzleSize;
-	int m_blockSize;
-
+	
 	void output() const; // Output Grid.
 
 	void readPuzzle(const char filenameIn[]); // Initialise Grid.

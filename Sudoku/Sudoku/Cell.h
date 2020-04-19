@@ -41,7 +41,7 @@ public:
 		m_givenFlag = flagState;
 	}
 
-	// Methods to alter the candidate list.
+	// Method to alter the candidate list.
 	void removeCandidateValue(const int value);
 
 
