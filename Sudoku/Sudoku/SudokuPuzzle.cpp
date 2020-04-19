@@ -18,6 +18,13 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 	const auto startTime = std::chrono::high_resolution_clock::now();
 
 	// Add code to solve the puzzle
+	bool solved = false;
+
+	/*while (solved == false)
+	{
+
+	}*/
+
 
 	// Get end time
 	const auto endTime = std::chrono::high_resolution_clock::now();
@@ -53,78 +60,96 @@ void SudokuPuzzle::readPuzzle(const char filenameIn[])
 			// Reading file values into the CellGroup for the rows.
 			m_gridRows[row].setCell(column, new Cell(inputValue, givenFlag));
 
-			// Using the Rows CellGroup to populate the Column CellGroup. To setCell from the Rows CellGroup, the setCell index param has to 
-			// be the row, and the Cell we want to point to has to be in the current row we're on in the loop. Then, we getCell on the correct 
-			// element index in the row. This gives us the correct cell to be pointed to by the correct element in our Column CellGroup.
+			// Using the Rows CellGroup to populate the Column CellGroup. To setCell from the Rows CellGroup, 
+			// the setCell index param has to be the row, and the Cell we want to point to has to be in the 
+			// current row we're on in the loop. Then, we getCell on the correct element index in the row. 
+			// This gives us the correct cell to be pointed to by the correct element in our Column CellGroup.
 			m_gridColumns[column].setCell(row, m_gridRows[row].getCell(column));
 
 			// Using the Rows CellGroup to populate the Block CellGroup.
 			m_gridBlocks[blockNumber].setCell(cellIndexInBlock, m_gridRows[row].getCell(column)); // Should be working now.
 
-			// Setting the block number.
-			if (column == 2 || column == 5)
-			{
-				blockNumber++;
-			}
-			else if (column == 8)
-			{
-				if (row < 2)
-				{
-					blockNumber = 0;
-				}
-				else if (row < 5)
-				{
-					blockNumber = 3;
-				}
-				else if (row >= 5)
-				{
-					blockNumber = 6;
-				}
-			}
 
-			// Setting the cellIndexInBlock number.
-			if (row == 0 || row == 3 || row == 6)
-			{
-				if (column == 2 || column == 5)
-				{
-					cellIndexInBlock = 0;
-				}
-				else
-				{
-					cellIndexInBlock++;
-				}
-			}
-			else if (row == 1 || row == 4 || row == 7)
-			{
-				if (column == 2 || column == 5)
-				{
-					cellIndexInBlock = 3;
-				}
-				else
-				{
-					cellIndexInBlock++;
-				}
-			}
-			else if (row == 2 || row == 5 || row == 8)
-			{
-				if (column == 2 || column == 5)
-				{
-					cellIndexInBlock = 6;
-				}
-				else if (column == 8)
-				{
-					cellIndexInBlock = 0;
-				}
-				else
-				{
-					cellIndexInBlock++;
-				}
-			}
-			
+			// Getting the block number for the next iteration.
+			blockNumber = getBlockNumber(row, column, blockNumber);
+
+			// Getting the cellIndexInBlock number for the next iteration.
+			cellIndexInBlock = getCellIndexInBlock(row, column, cellIndexInBlock);
 		}
 	}
 }
 
+int SudokuPuzzle::getBlockNumber(const int row, const int column, const int p_blockNumber) const
+{
+	int blockNumber = p_blockNumber;
+
+	if (column == 2 || column == 5)
+	{
+		blockNumber++;
+	}
+	else if (column == 8)
+	{
+		if (row < 2)
+		{
+			blockNumber = 0;
+		}
+		else if (row < 5)
+		{
+			blockNumber = 3;
+		}
+		else if (row >= 5)
+		{
+			blockNumber = 6;
+		}
+	}
+
+	return blockNumber;
+}
+
+int SudokuPuzzle::getCellIndexInBlock(const int row, const int column, const int p_cellIndexInBlock) const
+{
+	int cellIndexInBlock = p_cellIndexInBlock;
+
+	if (row == 0 || row == 3 || row == 6)
+	{
+		if (column == 2 || column == 5)
+		{
+			cellIndexInBlock = 0;
+		}
+		else
+		{
+			cellIndexInBlock++;
+		}
+	}
+	else if (row == 1 || row == 4 || row == 7)
+	{
+		if (column == 2 || column == 5)
+		{
+			cellIndexInBlock = 3;
+		}
+		else
+		{
+			cellIndexInBlock++;
+		}
+	}
+	else if (row == 2 || row == 5 || row == 8)
+	{
+		if (column == 2 || column == 5)
+		{
+			cellIndexInBlock = 6;
+		}
+		else if (column == 8)
+		{
+			cellIndexInBlock = 0;
+		}
+		else
+		{
+			cellIndexInBlock++;
+		}
+	}
+
+	return cellIndexInBlock;
+}
 
 void SudokuPuzzle::output() const {
 	// Add code to output your solved puzzle
