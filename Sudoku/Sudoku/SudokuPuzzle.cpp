@@ -37,6 +37,7 @@ void SudokuPuzzle::readPuzzle(const char filenameIn[])
 	// First part of algorithm needs to input all the file values into the CellGroup for gridRows[9], as specified in ACW.
 
 	int inputValue; // Declare these ONCE in the entire class, if it's re-used in future code (performance increase).
+	int blockNumber = 0, cellIndexInBlock = 0;
 	for (int row = 0; row < 9; row++) // Leaving as post++, as doesn't affect performance with ints.
 	{
 		for (int column = 0; column < 9; column++)
@@ -58,7 +59,64 @@ void SudokuPuzzle::readPuzzle(const char filenameIn[])
 			m_gridColumns[column].setCell(row, m_gridRows[row].getCell(column));
 
 			// Using the Rows CellGroup to populate the Block CellGroup.
-			m_gridBlocks[row].setCell(row, m_gridRows[row].getCell(column)); // NOT WORKING. Gonna be complicated...
+			m_gridBlocks[blockNumber].setCell(cellIndexInBlock, m_gridRows[row].getCell(column)); // NOT WORKING. Gonna be complicated...
+
+			// Setting the block number.
+			if (column == 2 || column == 5)
+			{
+				blockNumber++;
+			}
+			else if (column == 8)
+			{
+				if (row < 2)
+				{
+					blockNumber = 0;
+				}
+				else if (row > 2 && row < 5)
+				{
+					blockNumber = 3;
+				}
+				else if (row > 5)
+				{
+					blockNumber = 6;
+				}
+			}
+
+			// Setting the cellIndexInBlock number.
+			if (row == 0 || row == 3 || row == 6)
+			{
+				if (column == 2 || column == 5)
+				{
+					cellIndexInBlock = 0;
+				}
+				else
+				{
+					cellIndexInBlock++;
+				}
+			}
+			else if (row == 1 || row == 4 || row == 7)
+			{
+				if (column == 2 || column == 5)
+				{
+					cellIndexInBlock = 3;
+				}
+				else
+				{
+					cellIndexInBlock++;
+				}
+			}
+			else if (row == 2 || row == 5 || row == 8)
+			{
+				if (column == 2 || column == 5)
+				{
+					cellIndexInBlock = 6;
+				}
+				else
+				{
+					cellIndexInBlock++;
+				}
+			}
+			
 		}
 	}
 }
