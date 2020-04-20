@@ -19,6 +19,8 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 
 	// Adding code to solve the puzzle
 	bool solved = true;
+	int cellSolvedCounter = 0;
+	int numOfPasses = 0;
 	int blockNumber = 0, cellIndexInBlock = 0;
 	do
 	{
@@ -79,10 +81,14 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 					{
 						// Since there's only one value in the list, set this cells values to this value.
 						m_gridRows[row].getCell(column)->setValue(m_gridRows[row].getCell(column)->getCandidateValueAtIndex(0));
+						cellSolvedCounter++;
 					}
+
+					// Implement 'hidden single' algorithm here...
 				}
 			}
 		}
+		numOfPasses++;
 
 	} while (solved == false);
 
