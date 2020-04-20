@@ -3,7 +3,7 @@
 #include <chrono>
 
 
-SudokuPuzzle::SudokuPuzzle() 
+SudokuPuzzle::SudokuPuzzle()
 {
 }
 
@@ -18,30 +18,73 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 	const auto startTime = std::chrono::high_resolution_clock::now();
 
 	// Adding code to solve the puzzle
-	bool solved = false;
-	while (solved == false)
+	bool solved = true;
+	int blockNumber = 0, cellIndexInBlock = 0;
+	do
 	{
+		solved = true; // Reset for next pass.
+
 		// Visiting each individual cell.
 		for (int row = 0; row < 9; row++)
 		{
 			for (int column = 0; column < 9; column++)
 			{
-				// As not to visit given values already.
-				bool wasValueGiven = m_gridRows[row].getCell(column)->getGivenFlag();
-
-				if (wasValueGiven == false)
+				// If the value in the cell is equal to zero, then the cell has not been solved, so solve it.
+				if (m_gridRows[row].getCell(column)->getValue() == 0)
 				{
-					// To check if we haven't already solved this position/ cell.
-					int currentValue = m_gridRows[row].getCell(column)->getValue();
+					solved = false;
 
-					if (currentValue == 0)
+					// Gets the specific block number for the next iteration.
+					blockNumber = getBlockNumber(row, column, blockNumber);
+
+					// Getting the cellIndexInBlock number for the next iteration.
+					cellIndexInBlock = getCellIndexInBlock(row, column, cellIndexInBlock);
+
+					// Doing the 'naked single' solving algorithm.
+					for (int cellIndex = 0; cellIndex < 9; cellIndex++)
 					{
-						// Carry on here. Need to solve via candidate list, triple context etc...
+						// Checking the row context of the current cell.
+						if (m_gridRows[row].getCell(cellIndex)->getValue() != 0)
+						{
+							// Remove this value from the candidate list.
+							int valueToRemove = m_gridRows[row].getCell(cellIndex)->getValue();
+							m_gridRows[row].getCell(column)->removeCandidateValue(valueToRemove);
+						}
+					}
+
+					for (int cellIndex = 0; cellIndex < 9; cellIndex++)
+					{
+						// Checking the column context of the current cell.
+						if (m_gridColumns[column].getCell(cellIndex)->getValue() != 0)
+						{
+							// Remove this value from the candidate list.
+							int valueToRemove = m_gridColumns[column].getCell(cellIndex)->getValue();
+							m_gridColumns[column].getCell(row)->removeCandidateValue(valueToRemove);
+						}
+					}
+					
+					for (int cellIndex = 0; cellIndex < 9; cellIndex++)
+					{
+						// Checking the block context of the current cell.
+						if (m_gridBlocks[blockNumber].getCell(cellIndex)->getValue() != 0)
+						{
+							// Remove this value from the candidate list.
+							int valueToRemove = m_gridBlocks[blockNumber].getCell(cellIndex)->getValue();
+							m_gridBlocks[blockNumber].getCell(cellIndexInBlock)->removeCandidateValue(valueToRemove);
+						}
+					}
+
+					// Checking the size of each cells candidate list. Assign new cell value if size is 1.
+					if (m_gridRows[row].getCell(column)->getCandidateListSize() == 1)
+					{
+						// Since there's only one value in the list, set this cells values to this value.
+						m_gridRows[row].getCell(column)->setValue(m_gridRows[row].getCell(column)->getCandidateValueAtIndex(0));
 					}
 				}
 			}
 		}
-	}
+
+	} while (solved == false);
 
 
 	// Get end time
@@ -56,7 +99,7 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 }
 
 
-void SudokuPuzzle::readPuzzle(const char filenameIn[]) 
+void SudokuPuzzle::readPuzzle(const char filenameIn[])
 {
 	ifstream fin(filenameIn);
 	// First part of algorithm needs to input all the file values into the CellGroup for gridRows[9], as specified in ACW.
