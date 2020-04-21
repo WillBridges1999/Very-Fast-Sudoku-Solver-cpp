@@ -22,10 +22,10 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 	int cellSolvedCounter = 0;
 	int candidateValueConsideredCounter = 0;
 	int numOfPasses = 0;
-	int blockNumber = 0, cellIndexInBlock = 0;
 	do
 	{
 		solved = true; // Reset for next pass.
+		int blockNumber = 0, cellIndexInBlock = 0;
 
 		// Visiting each individual cell.
 		for (int row = 0; row < 9; row++)
@@ -85,7 +85,7 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 					// Need to do another check since we may have solved a cells value in the 'naked single'
 					// algorithm, but without this check the 'hidden single' algorithm wouldn't be aware of this.
 
-					if (m_gridRows[row].getCell(column)->getValue() == 0)
+					/*if (m_gridRows[row].getCell(column)->getValue() == 0)
 					{
 						// For each candidate value in the current cells candidate list.
 						for (size_t candidateValueIndex = 0; candidateValueIndex < m_gridRows[row].getCell(column)->getCandidateListSize();
@@ -106,12 +106,12 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 								v = m_gridRows[row].getCell(cellIndex)->getCandidateList();
 								if (std::find(v.begin(), v.end(), candiValue) != v.end())
 								{
-									/* v contains candidateValue */
+									// v contains candidateValue
 									hiddenSingle = false;
 								}
 								else
 								{
-									/* v does not contain candidateValue */
+									// v does not contain candidateValue
 									hiddenSingle = true;
 								}
 
@@ -119,12 +119,12 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 								v = m_gridColumns[column].getCell(cellIndex)->getCandidateList();
 								if (std::find(v.begin(), v.end(), candiValue) != v.end())
 								{
-									/* v contains candidateValue */
+									// v contains candidateValue
 									hiddenSingle = false;
 								}
 								else
 								{
-									/* v does not contain candidateValue */
+									// v does not contain candidateValue
 									hiddenSingle = true;
 								}
 
@@ -132,12 +132,12 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 								v = m_gridBlocks[blockNumber].getCell(cellIndex)->getCandidateList();
 								if (std::find(v.begin(), v.end(), candiValue) != v.end())
 								{
-									/* v contains candidateValue */
+									// v contains candidateValue
 									hiddenSingle = false;
 								}
 								else
 								{
-									/* v does not contain candidateValue */
+									// v does not contain candidateValue
 									hiddenSingle = true;
 								}
 							}
@@ -151,7 +151,7 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 							}
 
 						}
-					}
+					}*/
 
 				}
 				// Gets the specific block number for the next iteration.
@@ -293,4 +293,18 @@ int SudokuPuzzle::getCellIndexInBlock(const int row, const int column, const int
 
 void SudokuPuzzle::output() const {
 	// Add code to output your solved puzzle
+	ofstream fout("sudoku_solution.txt");
+	if (fout.is_open())
+	{
+		for (int row = 0; row < 9; row++)
+		{
+			for (int column = 0; column < 9; ++column)
+			{
+				fout << m_gridRows[row].getCell(column)->getValue() << " ";
+			}
+
+			fout << endl;
+		}
+		fout.close();
+	}
 }
