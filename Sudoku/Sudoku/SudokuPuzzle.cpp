@@ -37,12 +37,6 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 				{
 					solved = false;
 
-					// Gets the specific block number for the next iteration.
-					blockNumber = getBlockNumber(row, column, blockNumber);
-
-					// Getting the cellIndexInBlock number for the next iteration.
-					cellIndexInBlock = getCellIndexInBlock(row, column, cellIndexInBlock);
-
 					// Doing the 'naked single' solving algorithm.
 					for (int cellIndex = 0; cellIndex < 9; cellIndex++)
 					{
@@ -160,6 +154,11 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 					}
 
 				}
+				// Gets the specific block number for the next iteration.
+				blockNumber = getBlockNumber(row, column, blockNumber);
+
+				// Getting the cellIndexInBlock number for the next iteration.
+				cellIndexInBlock = getCellIndexInBlock(row, column, cellIndexInBlock);
 			}
 		}
 		numOfPasses++;
