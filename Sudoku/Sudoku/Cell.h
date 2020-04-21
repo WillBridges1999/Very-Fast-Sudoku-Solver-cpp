@@ -30,6 +30,10 @@ public:
 	{
 		return m_candidateList.size();
 	}
+	inline vector<int> getCandidateList() const
+	{
+		return m_candidateList;
+	}
 
 	// Setters/ mutators for member variables.
 	inline void setValue(const int value)

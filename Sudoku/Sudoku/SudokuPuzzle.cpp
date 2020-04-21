@@ -20,6 +20,7 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 	// Adding code to solve the puzzle
 	bool solved = true;
 	int cellSolvedCounter = 0;
+	int candidateValueConsideredCounter = 0;
 	int numOfPasses = 0;
 	int blockNumber = 0, cellIndexInBlock = 0;
 	do
@@ -84,7 +85,73 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 						cellSolvedCounter++;
 					}
 
-					// Implement 'hidden single' algorithm here...
+
+					// Implementing 'hidden single' algorithm now.
+
+					// For each candidate value in the current cells candidate list.
+					for (size_t candidateValueIndex = 0; candidateValueIndex < m_gridRows[row].getCell(column)->getCandidateListSize();
+						candidateValueIndex++)
+					{
+						// Get a candidate value from the current cells candidate list.
+						int candiValue = m_gridRows[row].getCell(column)->getCandidateValueAtIndex(candidateValueIndex);
+						bool hiddenSingle = false;
+						std::vector<int> v;
+
+						// For each ROW CONTEXT cells candidate list, check if the candiValue appears in the list or not.
+						for (int cellIndex = 0; cellIndex < 9; cellIndex++)
+						{
+							candidateValueConsideredCounter++;
+
+							// Get the candidate list (vector) for this cell- from the ROW CONTEXT CELLS.
+							// Code found from: https://stackoverflow.com/questions/3450860/check-if-a-stdvector-contains-a-certain-object
+							v = m_gridRows[row].getCell(cellIndex)->getCandidateList();
+							if (std::find(v.begin(), v.end(), candiValue) != v.end()) 
+							{
+								/* v contains candidateValue */
+								hiddenSingle = false;
+							}
+							else 
+							{
+								/* v does not contain candidateValue */
+								hiddenSingle = true;
+							}
+
+							// Do the same as above, but for the COLUMN INDEX CELLS now.
+							v = m_gridColumns[column].getCell(cellIndex)->getCandidateList();
+							if (std::find(v.begin(), v.end(), candiValue) != v.end())
+							{
+								/* v contains candidateValue */
+								hiddenSingle = false;
+							}
+							else
+							{
+								/* v does not contain candidateValue */
+								hiddenSingle = true;
+							}
+
+							// Finally, do the same but for the BLOCK INDEX CELLS now.
+							v = m_gridColumns[blockNumber].getCell(cellIndex)->getCandidateList();
+							if (std::find(v.begin(), v.end(), candiValue) != v.end())
+							{
+								/* v contains candidateValue */
+								hiddenSingle = false;
+							}
+							else
+							{
+								/* v does not contain candidateValue */
+								hiddenSingle = true;
+							}
+						}
+
+						// After checking all the candidate lists for the triple context, check the hiddenSingle result.
+						if (hiddenSingle == true)
+						{
+							// Hidden single found, therefore set this value to the current cells value.
+							m_gridRows[row].getCell(column)->setValue(candiValue);
+						}
+
+					}
+
 				}
 			}
 		}
