@@ -305,6 +305,7 @@ void SudokuPuzzle::output() const {
 
 			fout << endl;
 		}
+
 		fout.close();
 	}
 }
