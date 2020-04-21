@@ -93,7 +93,7 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 						{
 							// Get a candidate value from the current cells candidate list.
 							int candiValue = m_gridRows[row].getCell(column)->getCandidateValueAtIndex(candidateValueIndex);
-							bool isHiddenSingle = false;
+							bool isHiddenSingle = true;
 							std::vector<int> v;
 
 							// For each ROW, COLUMN AND BLOCK CONTEXT cells candidate list, check if the candiValue appears in the list or not.
@@ -110,11 +110,6 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 									isHiddenSingle = false;
 									break;
 								}
-								else
-								{
-									// v does not contain candidateValue
-									isHiddenSingle = true;
-								}
 								v.clear();
 
 								// Do the same as above, but for the COLUMN INDEX CELLS now.
@@ -125,11 +120,6 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 									isHiddenSingle = false;
 									break;
 								}
-								else
-								{
-									// v does not contain candidateValue
-									isHiddenSingle = true;
-								}
 								v.clear();
 
 								// Finally, do the same but for the BLOCK INDEX CELLS now.
@@ -139,11 +129,6 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 									// v contains candidateValue
 									isHiddenSingle = false;
 									break;
-								}
-								else
-								{
-									// v does not contain candidateValue
-									isHiddenSingle = true;
 								}
 								v.clear();
 							}
@@ -169,7 +154,7 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 		}
 		numOfPasses++;
 
-	} while (solved == false);
+	} while (!solved);
 
 
 	// Get end time
@@ -178,6 +163,11 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 
 	// Sample timing output in nanoseconds
 	std::cout << duration << "ns" << std::endl;
+
+	// Displaying some debug information for the marker of the coursework.
+	std::cout << "Amount of cells solved: " << cellSolvedCounter << std::endl;
+	std::cout << "Number of passes through the grid required: " << numOfPasses << std::endl;
+	std::cout << "Number of candidate values considered: " << candidateValueConsideredCounter << std::endl;
 
 	// Output the solved puzzle
 	output();
