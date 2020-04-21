@@ -7,6 +7,10 @@ public:
 	CellGroup(void);
 	~CellGroup(void);
 
+	// Copy constructor and copy assignment constructor due to private, pointer-type variables (for severity 3 pass).
+	CellGroup(const CellGroup &c);
+	CellGroup& operator=(const CellGroup &c);
+
 	// Getter/ accessor for a cell (return a Cell pointer).
 	inline Cell* getCell(const int index) const
 	{
@@ -14,7 +18,7 @@ public:
 	}
 
 	// Setter/ mutator for a cell (via a Cell type pointer).
-	inline void setCell(const int index, Cell *cell)
+	inline void setCell(const int index, Cell* cell)
 	{
 		m_cells[index] = cell;
 	}

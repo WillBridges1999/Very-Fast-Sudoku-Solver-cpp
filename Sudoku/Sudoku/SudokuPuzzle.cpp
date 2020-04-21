@@ -44,7 +44,7 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 						if (m_gridRows[row].getCell(cellIndex)->getValue() != 0)
 						{
 							// Remove this value from the candidate list.
-							int valueToRemove = m_gridRows[row].getCell(cellIndex)->getValue();
+							const int valueToRemove = m_gridRows[row].getCell(cellIndex)->getValue();
 							m_gridRows[row].getCell(column)->removeCandidateValue(valueToRemove);
 						}
 					}
@@ -55,7 +55,7 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 						if (m_gridColumns[column].getCell(cellIndex)->getValue() != 0)
 						{
 							// Remove this value from the candidate list.
-							int valueToRemove = m_gridColumns[column].getCell(cellIndex)->getValue();
+							const int valueToRemove = m_gridColumns[column].getCell(cellIndex)->getValue();
 							m_gridColumns[column].getCell(row)->removeCandidateValue(valueToRemove);
 						}
 					}
@@ -66,7 +66,7 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 						if (m_gridBlocks[blockNumber].getCell(cellIndex)->getValue() != 0)
 						{
 							// Remove this value from the candidate list.
-							int valueToRemove = m_gridBlocks[blockNumber].getCell(cellIndex)->getValue();
+							const int valueToRemove = m_gridBlocks[blockNumber].getCell(cellIndex)->getValue();
 							m_gridBlocks[blockNumber].getCell(cellIndexInBlock)->removeCandidateValue(valueToRemove);
 						}
 					}
@@ -92,7 +92,7 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 							candidateValueIndex++)
 						{
 							// Get a candidate value from the current cells candidate list.
-							int candiValue = m_gridRows[row].getCell(column)->getCandidateValueAtIndex(candidateValueIndex);
+							const int candiValue = m_gridRows[row].getCell(column)->getCandidateValueAtIndex(candidateValueIndex);
 							bool isHiddenSingle = true;
 							std::vector<int> v;
 
@@ -103,7 +103,7 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 								// Some code found from: https://stackoverflow.com/questions/3450860/check-if-a-stdvector-contains-a-certain-object
 
 								// Get the candidate list (vector) for this cell- from the ROW CONTEXT CELLS.
-								v = m_gridRows[row].getCell(cellIndex)->getCandidateList();
+								v = *m_gridRows[row].getCell(cellIndex)->getCandidateList();
 								if (std::find(v.begin(), v.end(), candiValue) != v.end())
 								{
 									// v contains candidateValue
@@ -113,7 +113,7 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 								v.clear();
 
 								// Do the same as above, but for the COLUMN INDEX CELLS now.
-								v = m_gridColumns[column].getCell(cellIndex)->getCandidateList();
+								v = *m_gridColumns[column].getCell(cellIndex)->getCandidateList();
 								if (std::find(v.begin(), v.end(), candiValue) != v.end())
 								{
 									// v contains candidateValue
@@ -123,7 +123,7 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 								v.clear();
 
 								// Finally, do the same but for the BLOCK INDEX CELLS now.
-								v = m_gridBlocks[blockNumber].getCell(cellIndex)->getCandidateList();
+								v = *m_gridBlocks[blockNumber].getCell(cellIndex)->getCandidateList();
 								if (std::find(v.begin(), v.end(), candiValue) != v.end())
 								{
 									// v contains candidateValue
