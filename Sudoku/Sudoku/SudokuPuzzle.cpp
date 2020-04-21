@@ -85,15 +85,15 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 					// Need to do another check since we may have solved a cells value in the 'naked single'
 					// algorithm, but without this check the 'hidden single' algorithm wouldn't be aware of this.
 
-					/*if (m_gridRows[row].getCell(column)->getValue() == 0)
+					if (m_gridRows[row].getCell(column)->getValue() == 0)
 					{
 						// For each candidate value in the current cells candidate list.
-						for (size_t candidateValueIndex = 0; candidateValueIndex < m_gridRows[row].getCell(column)->getCandidateListSize();
+						for (int candidateValueIndex = 0; candidateValueIndex < m_gridRows[row].getCell(column)->getCandidateListSize();
 							candidateValueIndex++)
 						{
 							// Get a candidate value from the current cells candidate list.
 							int candiValue = m_gridRows[row].getCell(column)->getCandidateValueAtIndex(candidateValueIndex);
-							bool hiddenSingle = false;
+							bool isHiddenSingle = false;
 							std::vector<int> v;
 
 							// For each ROW, COLUMN AND BLOCK CONTEXT cells candidate list, check if the candiValue appears in the list or not.
@@ -107,43 +107,49 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 								if (std::find(v.begin(), v.end(), candiValue) != v.end())
 								{
 									// v contains candidateValue
-									hiddenSingle = false;
+									isHiddenSingle = false;
+									break;
 								}
 								else
 								{
 									// v does not contain candidateValue
-									hiddenSingle = true;
+									isHiddenSingle = true;
 								}
+								v.clear();
 
 								// Do the same as above, but for the COLUMN INDEX CELLS now.
 								v = m_gridColumns[column].getCell(cellIndex)->getCandidateList();
 								if (std::find(v.begin(), v.end(), candiValue) != v.end())
 								{
 									// v contains candidateValue
-									hiddenSingle = false;
+									isHiddenSingle = false;
+									break;
 								}
 								else
 								{
 									// v does not contain candidateValue
-									hiddenSingle = true;
+									isHiddenSingle = true;
 								}
+								v.clear();
 
 								// Finally, do the same but for the BLOCK INDEX CELLS now.
 								v = m_gridBlocks[blockNumber].getCell(cellIndex)->getCandidateList();
 								if (std::find(v.begin(), v.end(), candiValue) != v.end())
 								{
 									// v contains candidateValue
-									hiddenSingle = false;
+									isHiddenSingle = false;
+									break;
 								}
 								else
 								{
 									// v does not contain candidateValue
-									hiddenSingle = true;
+									isHiddenSingle = true;
 								}
+								v.clear();
 							}
 
 							// After checking all the candidate lists for the triple context, check the hiddenSingle result.
-							if (hiddenSingle == true)
+							if (isHiddenSingle)
 							{
 								// Hidden single found, therefore set this value to the current cells value.
 								m_gridRows[row].getCell(column)->setValue(candiValue);
@@ -151,7 +157,7 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 							}
 
 						}
-					}*/
+					}
 
 				}
 				// Gets the specific block number for the next iteration.
