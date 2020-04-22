@@ -162,7 +162,10 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 	const auto duration = (endTime - startTime).count();
 
 	// Sample timing output in nanoseconds
-	std::cout << duration << "ns" << std::endl;
+	std::cout << "Duration to run, in nano-seconds: " << duration << "ns" << std::endl;
+	std::cout << "Duration to run, in milli-seconds: " << ((double)duration / 1000000) << "ms" << std::endl;
+	std::cout << "Duration to run, in seconds: " << ((double)duration / 1000000000) << "s" << std::endl;
+
 
 	// Displaying some debug information for the marker of the coursework.
 	std::cout << "Amount of cells solved: " << cellSolvedCounter << std::endl;
