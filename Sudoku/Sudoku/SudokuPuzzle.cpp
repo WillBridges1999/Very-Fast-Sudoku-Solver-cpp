@@ -139,6 +139,7 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 								// Hidden single found, therefore set this value to the current cells value.
 								m_gridRows[row].getCell(column)->setValue(candiValue);
 								cellSolvedCounter++;
+								break;
 							}
 
 						}
