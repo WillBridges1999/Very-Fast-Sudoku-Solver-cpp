@@ -18,7 +18,7 @@ public:
 	}
 
 	// Setter/ mutator for a cell (via a Cell type pointer).
-	inline void setCell(const int index, Cell* cell)
+	inline void setCell(const int index, Cell* const cell)
 	{
 		m_cells[index] = cell;
 	}
