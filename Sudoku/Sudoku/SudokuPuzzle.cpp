@@ -9,17 +9,18 @@ SudokuPuzzle::SudokuPuzzle()
 
 SudokuPuzzle::~SudokuPuzzle() { }
 
+int g_cellSolvedCounter{ 0 }; // Global counter, so it has scope in multiple methods.
 
 void SudokuPuzzle::solve(const char filenameIn[]) {
 	// Read puzzle from text file
 	readPuzzle(filenameIn);
+
 
 	// Get start time
 	const auto startTime = std::chrono::high_resolution_clock::now();
 
 	// Adding code to solve the puzzle
 	bool solved = true;
-	int cellSolvedCounter = 0;
 	int candidateValueConsideredCounter = 0;
 	int numOfPasses = 0;
 	do
@@ -76,7 +77,7 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 					{
 						// Since there's only one value in the list, set this cells values to this value.
 						m_gridRows[row].getCell(column)->setValue(m_gridRows[row].getCell(column)->getCandidateValueAtIndex(0));
-						cellSolvedCounter++;
+						g_cellSolvedCounter++;
 					}
 
 
@@ -138,7 +139,7 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 							{
 								// Hidden single found, therefore set this value to the current cells value.
 								m_gridRows[row].getCell(column)->setValue(candiValue);
-								cellSolvedCounter++;
+								g_cellSolvedCounter++;
 								break;
 							}
 
@@ -164,12 +165,12 @@ void SudokuPuzzle::solve(const char filenameIn[]) {
 
 	// Sample timing output in nanoseconds
 	std::cout << "Duration to run, in nano-seconds: " << duration << "ns" << std::endl;
-	std::cout << "Duration to run, in milli-seconds: " << ((double)duration / 1000000) << "ms" << std::endl;
-	std::cout << "Duration to run, in seconds: " << ((double)duration / 1000000000) << "s" << std::endl;
+	std::cout << "Duration to run, in milli-seconds: " << (static_cast<double>(duration) / 1000000) << "ms" << std::endl;
+	std::cout << "Duration to run, in seconds: " << (static_cast<double>(duration) / 1000000000) << "s" << std::endl;
 
 
 	// Displaying some debug information for the marker of the coursework.
-	std::cout << "Amount of cells solved: " << cellSolvedCounter << std::endl;
+	std::cout << "Amount of cells solved: " << g_cellSolvedCounter << std::endl;
 	std::cout << "Number of passes through the grid required: " << numOfPasses << std::endl;
 	std::cout << "Number of candidate values considered: " << candidateValueConsideredCounter << std::endl;
 
@@ -195,6 +196,10 @@ void SudokuPuzzle::readPuzzle(const char filenameIn[])
 			if (inputValue == 0)
 			{
 				givenFlag = false;
+			}
+			else
+			{
+				g_cellSolvedCounter++;
 			}
 
 			// Reading file values into the CellGroup for the rows.
